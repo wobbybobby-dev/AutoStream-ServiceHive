@@ -40,7 +40,7 @@ This agent is built with **LangGraph** because it provides explicit, inspectable
 
 ```
 autostream_agent/
-├── knowledge_base.json   # AutoStream product data (RAG source)
+├── local_database.json   # AutoStream product data (RAG source)
 ├── prompts.py            # System prompt + intent examples
 ├── rag.py                # Retrieval logic
 ├── tools.py              # mock_lead_capture + tool registry

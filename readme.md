@@ -22,7 +22,8 @@ python main.py
 
 This agent is built with **LangGraph** because it provides explicit, inspectable state management — every field (lead info, conversation history, intent, RAG context) lives in a typed `AgentState` dict that flows through the graph. This makes debugging easy and the state visible at any point. LangGraph also separates concerns cleanly: each node (retrieve → llm → update_lead → tool_call → update_history) does one job, making the pipeline easy to extend.
 
-**State management**: The full conversation history is kept as a list of `HumanMessage` / `AIMessage` objects in `AgentState.messages`, passed to the LLM on every turn. This gives the model memory across 5–6+ turns with no external store needed. Lead info (`name`, `email`, `platform`) is accumulated incrementally across turns in `AgentState.lead_info`.
+**State management**: The agent uses LangGraph’s TypedDict-based state to maintain conversation context across turns. The full conversation history is kept as a list of `HumanMessage` / `AIMessage` objects in `AgentState.messages`, passed to the LLM on every turn. This gives the model memory across 5–6+ turns with no external store needed. Lead info (`name`, `email`, `platform`) is accumulated incrementally across turns in `AgentState.lead_info`. The LLM indicates which field has been collected via lead_field_collected, and the system extracts the corresponding value from user input using lightweight parsing logic (e.g., regex for email).
+This approach enables controlled multi-turn interactions and stateful decision-making while keeping the system simple and self-contained.
 
 **RAG**: A keyword-scoring retrieval function chunks the knowledge base JSON into labelled text segments and scores them against the user query. No vector DB is needed at this scale. The top-3 chunks are injected into the system prompt each turn.
 

@@ -1,6 +1,6 @@
 # AutoStream AI Agent
 
-A conversational AI lead-capture agent for AutoStream, built with LangGraph + Claude 3 Haiku.
+A conversational AI lead-capture agent for AutoStream, built with LangGraph + GPT-4-o-mini.
 
 ## Setup
 
